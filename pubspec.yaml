@@ -1,6 +1,6 @@
 name: usb_storage_path
-description: "A new Flutter plugin project."
-version: 0.0.1
+description: "Android USB storage path provider"
+version: 0.0.7
 homepage:
 
 environment:

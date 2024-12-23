@@ -23,7 +23,7 @@ abstract class UsbStoragePathPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<String?> getUsbStoragePath() {
+    throw UnimplementedError('getUsbStoragePath() has not been implemented.');
   }
 }
