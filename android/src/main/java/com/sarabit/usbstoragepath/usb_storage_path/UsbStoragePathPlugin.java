@@ -1,0 +1,47 @@
+package com.sarabit.usbstoragepath.usb_storage_path;
+
+import androidx.annotation.NonNull;
+
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import io.flutter.plugin.common.MethodChannel.Result;
+
+/**
+ * UsbStoragePathPlugin
+ */
+public class UsbStoragePathPlugin implements FlutterPlugin, MethodCallHandler {
+    /// The MethodChannel that will the communication between Flutter and native Android
+    ///
+    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+    /// when the Flutter Engine is detached from the Activity
+    private MethodChannel channel;
+
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "usb_storage_path");
+        channel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+        if (call.method.equals("getUsbStoragePath")) {
+            String usbPath = getUsbStoragePath();
+            if (usbPath != null) {
+                result.success(usbPath);
+            } else {
+                result.error("UNAVAILABLE", "USB storage path not found", null);
+            }
+        } else {
+            result.notImplemented();
+        }
+    }
+
+
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        channel.setMethodCallHandler(null);
+    }
+}
